@@ -419,7 +419,7 @@ def main(args):
         randomize_init=True,
         render_point_cloud=0,
         #render_cameras=["face_panda","face_ur5e","teaser",],
-        render_cameras=["face_panda","face_ur5e","teaser",],
+        render_cameras=["face_gen3","face_ur5e","teaser",],
         one_obj_each=True,
     )
     robots = env.get_sim_robots()

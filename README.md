@@ -44,7 +44,7 @@ streamed = client.completion_stream(...)
 ### Run multi-robot dialog on the PackGrocery Task using the latest GPT-4 model
 ```
 $ conda activate roco
-(roco) $ python run_dialog.py --task pack -llm gpt-4
+(roco) $ python run_dialog.py --task pack -llm meta-llama/Meta-Llama-3.1-405B-Instruct
 ```
 
 

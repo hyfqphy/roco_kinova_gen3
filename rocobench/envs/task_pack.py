@@ -122,7 +122,9 @@ class PackGroceryTask(MujocoSimEnv):
             **panda_config,
         )
         '''
-        self.robots[self.robot_name_map["gen3"]] = SimRobot(
+        self.robots[
+            self.robot_name_map["gen3"]
+            ] = SimRobot(
             physics=self.physics,
             use_ee_rest_quat=False,
             **gen3_config,  # 初始化 Gen3 机器人
