@@ -147,6 +147,84 @@ UR5E_SUCTION_CONSTANTS=dict(
     grasp_actuator="adhere_gripper",
     weld_body_name="suction",
 )
+
+GEN3_CONSTANTS = dict(
+    name="gen3",
+    all_joint_names=[
+        "joint_1",
+        "joint_2",
+        "joint_3",
+        "joint_4",
+        "joint_5",
+        "joint_6",
+        "joint_7"
+    ],
+    ik_joint_names=[
+        "joint_1",
+        "joint_2",
+        "joint_3",
+        "joint_4",
+        "joint_5",
+        "joint_6",
+        "joint_7"
+    ],
+    arm_joint_names=[
+        "joint_1",
+        "joint_2",
+        "joint_3",
+        "joint_4",
+        "joint_5",
+        "joint_6",
+        "joint_7"
+    ],
+    actuator_info={
+        "joint_1": "joint_1",
+        "joint_2": "joint_2",
+        "joint_3": "joint_3",
+        "joint_4": "joint_4",
+        "joint_5": "joint_5",
+        "joint_6": "joint_6",
+        "joint_7": "joint_7",
+    },
+    all_link_names=[
+        "base_link",
+        "shoulder_link",
+        "half_arm_1_link",
+        "half_arm_2_link",
+        "forearm_link",
+        "spherical_wrist_1_link",
+        "spherical_wrist_2_link",
+        "bracelet_with_vision_link"
+    ],
+    arm_link_names=[
+        "base_link",
+        "shoulder_link",
+        "half_arm_1_link",
+        "half_arm_2_link",
+        "forearm_link",
+        "spherical_wrist_1_link",
+        "spherical_wrist_2_link",
+        "bracelet_with_vision_link"
+    ],
+    ee_link_names=[
+        "bracelet_with_vision_link"
+    ],
+    base_joint="joint_1",
+    ee_site_name="pinch_site",
+    grasp_actuator="adhere_gripper",
+    weld_body_name="gen3",
+    keyframes={
+        "home": {
+            "qpos": [0, 0.26179939, 3.14159265, -2.26892803, 0, 0.95993109, 1.57079633],
+            "ctrl": [0, 0.26179939, 3.14159265, -2.26892803, 0, 0.95993109, 1.57079633]
+        },
+        "retract": {
+            "qpos": [0, -0.34906585, 3.14159265, -2.54818071, 0, -0.87266463, 1.57079633],
+            "ctrl": [0, -0.34906585, 3.14159265, -2.54818071, 0, -0.87266463, 1.57079633]
+        }
+    }
+)
+
 PANDA_CONSTANTS=dict(
     name="panda",
     all_joint_names=[

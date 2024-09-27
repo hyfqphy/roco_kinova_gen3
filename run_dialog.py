@@ -27,6 +27,7 @@ TASK_NAME_MAP = {
     "sweep": SweepTask,
     "sandwich": MakeSandwichTask,
     "pack": PackGroceryTask,
+    
 }
 
 class LLMRunner:
@@ -417,6 +418,7 @@ def main(args):
         error_threshold=1e-5,
         randomize_init=True,
         render_point_cloud=0,
+        #render_cameras=["face_panda","face_ur5e","teaser",],
         render_cameras=["face_panda","face_ur5e","teaser",],
         one_obj_each=True,
     )
@@ -474,7 +476,7 @@ if __name__ == "__main__":
     parser.add_argument("--output_mode", type=str, default="action_only", choices=["action_only", "action_and_path"])
     parser.add_argument("--comm_mode", type=str, default="dialog", choices=["chat", "plan", "dialog"])
     parser.add_argument("--control_freq", "-cf", type=int, default=15)
-    parser.add_argument("--skip_display", "-sd", action="store_true")
+    parser.add_argument("--skip_display", "-sd", action="store_false")
     parser.add_argument("--direct_waypoints", "-dw", type=int, default=5)
     parser.add_argument("--num_replans", "-nr", type=int, default=5)
     parser.add_argument("--cont", "-c", action="store_true")
@@ -487,7 +489,7 @@ if __name__ == "__main__":
     parser.add_argument("--split_parsed_plans", "-sp", action="store_true")
     parser.add_argument("--no_history", "-nh", action="store_true")
     parser.add_argument("--no_feedback", "-nf", action="store_true")
-    parser.add_argument("--llm_source", "-llm", type=str, default="gpt-4")
+    parser.add_argument("--llm_source", "-llm", type=str, default="meta-llama/Meta-Llama-3.1-405B-Instruct")
     logging.basicConfig(level=logging.INFO)
 
     args = parser.parse_args()

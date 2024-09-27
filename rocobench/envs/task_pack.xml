@@ -1,11 +1,13 @@
   <mujoco model="task_pack">
   <compiler angle="radian" autolimits="true"/> 
   <include file="assets/ur5e/ur5e_assets.xml"/>
-  <include file="assets/ur5e/ur5e_0_assets.xml"/>   
+  <include file="assets/ur5e/ur5e_0_assets.xml"/>  
+  <include file="assets/kinova_gen3/gen3_assets.xml"/> 
   <include file="assets/robotiq/robotiq_assets.xml"/>
   <include file="assets/panda/panda_assets.xml"/>   
   <include file="assets/scene_assets.xml"/>
   <include file="assets/object_assets.xml"/>
+ 
 
   <visual>
     <headlight diffuse="0.6 0.6 0.6"  ambient="0.1 0.1 0.1" specular="0 0 0"/>
@@ -36,9 +38,13 @@
       <include file="assets/ur5e/ur5e_robotiq.xml" />
     </body>
 
-    <body name="panda" pos="-0.2 1.05 0.1" >
+    <!-- body name="panda" pos="-0.2 1.05 0.1" >
       <include file="assets/panda/panda_include.xml" />
-    </body> 
+    </body --> 
+
+    <body name="gen3" pos="-0.2 1.05 0.1">
+      <include file="assets/kinova_gen3/gen3_include.xml" />
+    </body > 
 
     <!-- useful for sampling random object initial locations -->
     <geom name="grid1" pos="-0.05 0.4 0.15" size="0.05 0.03 0.01" type="box" conaffinity="0" contype="0"  group="1" mass="0.00001" rgba="1 1 0 0" />
@@ -144,6 +150,7 @@
       <body name="soda_can_top" pos="0 0 0.06"/>
     </body>
 
+    <!-- <camera mode="fixed" name="face_panda" pos="0.223 -1.064 0.758" xyaxes="1.000 0.003 0.000 -0.000 0.143 0.990"/> -->
     <camera mode="fixed" name="face_panda" pos="0.223 -1.064 0.758" xyaxes="1.000 0.003 0.000 -0.000 0.143 0.990"/>
     <camera mode="fixed" name="face_ur5e" pos="-0.207 2.256 1.027" xyaxes="-1.000 0.005 0.000 -0.001 -0.296 0.955"/>
     <camera mode="fixed" name="top_cam" pos="-0.001 0.652 2.057" xyaxes="-1.000 -0.000 -0.000 0.000 -1.000 0.019"/>
@@ -156,23 +163,29 @@
 
  
   <equality>
-    <weld name='apple_top_panda' body1='apple_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!--weld name='apple_top_panda' body1='apple_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/-->
+    <weld name='apple_top_gen3' body1='apple_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
     <weld name='apple_top_robotiq' body1='apple_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
     
-    <weld name='banana_top_panda' body1='banana_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='banana_top_panda' body1='banana_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
+    <weld name='banana_top_gen3' body1='banana_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
     <weld name='banana_top_robotiq' body1='banana_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
     
-    <weld name='milk_top_panda' body1='milk_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='milk_top_panda' body1='milk_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
+    <weld name='milk_top_gen3' body1='milk_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
     <weld name='milk_top_robotiq' body1='milk_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
 
-    <weld name='bread_top_panda' body1='bread_top' body2='panda_palm' relpose='0 0 0.02 1 0 0 0' active='false'/>
+    <!-- <weld name='bread_top_panda' body1='bread_top' body2='panda_palm' relpose='0 0 0.02 1 0 0 0' active='false'/> -->
+    <weld name='bread_top_gen3' body1='bread_top' body2='gen3_palm' relpose='0 0 0.02 1 0 0 0' active='false'/>
     <weld name='bread_top_robotiq' body1='bread_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
     
     <!-- distable some unrealistic grasps -->
-    <weld name='cereal_top_panda' body1='cereal_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='cereal_top_panda' body1='cereal_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
+    <weld name='cereal_top_gen3' body1='cereal_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
     <weld name='cereal_top_robotiq' body1='cereal_top' body2='robotiq_tip' relpose='0 0 -0.01 1 0 0 0' active='false'/>
     
-    <weld name='soda_can_top_panda' body1='soda_can_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='soda_can_top_panda' body1='soda_can_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
+    <weld name='soda_can_top_gen3' body1='soda_can_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
     <weld name='soda_can_top_robotiq' body1='soda_can_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
      
   </equality> 
@@ -207,9 +220,11 @@
     <pair name="bread_bin_left" geom1="bread_contact" geom2="bin_left" margin="0.02"/>
     <pair name="cereal_bin_left" geom1="cereal_contact" geom2="bin_left" margin="0.02"/>
 
-    <pair name="milk_panda" geom1="panda_hand_collision" geom2="milk_contact" margin="0.05" />
+    <!-- <pair name="milk_panda" geom1="panda_hand_collision" geom2="milk_contact" margin="0.05" /> -->
+    <pair name="milk_gen3" geom1="gen3_joint_collision" geom2="milk_contact" margin="0.05" />
     <pair name="milk_robotiq" geom1="robotiq_collision" geom2="milk_contact" margin="0.05" />
-    <pair name="cereal_panda" geom1="panda_hand_collision" geom2="cereal_contact" margin="0.05" />
+    <!-- <pair name="cereal_panda" geom1="panda_hand_collision" geom2="cereal_contact" margin="0.05" /> -->
+    <pair name="cereal_gen3" geom1="gen3_joint_collision" geom2="cereal_contact" margin="0.05" />
     <pair name="cereal_robotiq" geom1="robotiq_collision" geom2="cereal_contact" margin="0.05" />
     
   </contact>

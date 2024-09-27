@@ -18,7 +18,7 @@ import dm_control
 from dm_control import mujoco as dm_mujoco
 from dm_control.utils.transformations import mat_to_quat, quat_to_euler
 from .env_utils import AllowArbitraryTypes, VisionSensorOutput, PointCloud
-from .constants import UR5E_ROBOTIQ_CONSTANTS, UR5E_SUCTION_CONSTANTS, PANDA_CONSTANTS, SCENE_BOUNDS
+from .constants import UR5E_ROBOTIQ_CONSTANTS, UR5E_SUCTION_CONSTANTS, PANDA_CONSTANTS, SCENE_BOUNDS, GEN3_CONSTANTS
 
 
 @dataclasses.dataclass(frozen=False)
@@ -101,6 +101,7 @@ class EnvState:
     objects: Dict[str, ObjectState] 
     ur5e_suction: Union[RobotState, None] = None
     panda:        Union[RobotState, None] = None
+    gen3:         Union[RobotState, None] = None
     ur5e_robotiq: Union[RobotState, None] = None
     humanoid:     Union[RobotState, None] = None
     scene:        Optional[PointCloud] = None  
@@ -196,7 +197,8 @@ class MujocoSimEnv:
         self, 
         filepath: str, 
         task_objects: List[str], # key objects for each task
-        agent_configs: Dict = dict(ur5e_suction=UR5E_ROBOTIQ_CONSTANTS, panda=PANDA_CONSTANTS), 
+        # agent_configs: Dict = dict(ur5e_suction=UR5E_ROBOTIQ_CONSTANTS, panda=PANDA_CONSTANTS), 
+        agent_configs: Dict = dict(ur5e_suction=UR5E_ROBOTIQ_CONSTANTS, gen3=GEN3_CONSTANTS),
         render_cameras: List[str] = ["face_panda", "face_ur5e", "top_cam", "right_cam", "left_cam", "teaser"],
         image_hw: Tuple = (480,480),
         render_freq: int = 20,
@@ -229,7 +231,7 @@ class MujocoSimEnv:
 
         self.agent_configs = agent_configs 
         for k, v in self.agent_configs.items():
-            assert k in ["ur5e_suction", "panda", "ur5e_robotiq", "humanoid"], f"agent name {k} not supported" 
+            assert k in ["ur5e_suction", "panda", "ur5e_robotiq", "humanoid", "gen3"], f"agent name {k} not supported" 
 
         self.task_objects = task_objects 
 
@@ -581,7 +583,7 @@ class MujocoSimEnv:
         """ Agent can be any of the ur5e, panda, or humanoid robots"""
         data = self.data
         name = agent_constants.get('name', None)
-        assert 'ur5e' in name or name == 'panda' or name == "humanoid", 'Agent name {} not supported'.format(name)
+        assert 'ur5e' in name or name == 'panda' or name == "humanoid" or name == "gen3", 'Agent name {} not supported'.format(name)
         if name is None:
             raise ValueError('Agent name not specified in agent_constants')
 

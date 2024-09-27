@@ -1,0 +1,45 @@
+<mujocoinclude>
+<default>
+    <default class="gen3_visual">
+      <geom type="mesh" contype="0" conaffinity="0" group="2" rgba="0.75294 0.75294 0.75294 1"/>
+    </default>
+    <default class="gen3_collision">
+      <geom type="mesh" group="3"/>
+    </default>
+    <default class="large_actuator">
+      <position kp="2000" forcerange="-105 105"/>
+    </default>
+    <default class="small_actuator">
+      <position kp="500" forcerange="-52 52"/>
+    </default>
+    <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+  </default>
+
+  <asset>
+    <mesh name="base_link" file="kinova_gen3/assets/base_link.stl"/>
+    <mesh name="shoulder_link" file="kinova_gen3/assets/shoulder_link.stl"/>
+    <mesh name="half_arm_1_link" file="kinova_gen3/assets/half_arm_1_link.stl"/>
+    <mesh name="half_arm_2_link" file="kinova_gen3/assets/half_arm_2_link.stl"/>
+    <mesh name="forearm_link" file="kinova_gen3/assets/forearm_link.stl"/>
+    <mesh name="spherical_wrist_1_link" file="kinova_gen3/assets/spherical_wrist_1_link.stl"/>
+    <mesh name="spherical_wrist_2_link" file="kinova_gen3/assets/spherical_wrist_2_link.stl"/>
+    <mesh name="bracelet_with_vision_link" file="kinova_gen3/assets/bracelet_with_vision_link.stl"/>
+  </asset>
+
+  <actuator>
+    <position class="large_actuator" name="joint_1" joint="joint_1"/>
+    <position class="large_actuator" name="joint_2" joint="joint_2" ctrlrange="-2.2497294058206907 2.2497294058206907"/>
+    <position class="large_actuator" name="joint_3" joint="joint_3"/>
+    <position class="large_actuator" name="joint_4" joint="joint_4" ctrlrange="-2.5795966344476193 2.5795966344476193"/>
+    <position class="small_actuator" name="joint_5" joint="joint_5"/>
+    <position class="small_actuator" name="joint_6" joint="joint_6" ctrlrange="-2.0996310901491784 2.0996310901491784"/>
+    <position class="small_actuator" name="joint_7" joint="joint_7"/>
+  </actuator>
+
+  <keyframe>
+    <key name="gen3_home" qpos="0 0.26179939 3.14159265 -2.26892803 0 0.95993109 1.57079633"
+      ctrl="0 0.26179939 3.14159265 -2.26892803 0 0.95993109 1.57079633"/>
+    <key name="retract" qpos="0 -0.34906585 3.14159265 -2.54818071 0 -0.87266463 1.57079633"
+      ctrl="0 -0.34906585 3.14159265 -2.54818071 0 -0.87266463 1.57079633"/>
+  </keyframe>
+</mujocoinclude>

@@ -1,6 +1,7 @@
 import os 
 import json
 import pickle 
+import requests
 import numpy as np
 from rocobench.envs import MujocoSimEnv, EnvState
 import openai
@@ -24,9 +25,17 @@ Each <coord> is a tuple (x,y,z) for gripper location, follow these steps to plan
         e.g. given path [(0.1, 0.2, 0.3), (0.2, 0.2. 0.3), (0.3, 0.4. 0.7)], the distance between steps (0.1, 0.2, 0.3)-(0.2, 0.2. 0.3) is too low, and between (0.2, 0.2. 0.3)-(0.3, 0.4. 0.7) is too high. You can change the path to [(0.1, 0.2, 0.3), (0.15, 0.3. 0.5), (0.3, 0.4. 0.7)] 
     If a plan failed to execute, re-plan to choose more feasible steps in each PATH, or choose different actions.
 """
-OPENAI_KEY = str(json.load(open("openai_key.json")))
+'''
+with open("openai_key.json", "r") as f:
+    data = json.load(f)
+    OPENAI_KEY = data.get("openai_api_key")  # 提取 API 密钥
+    BASE_URL = data.get("base_url")  # 提取 base_url
+
 openai.api_key = OPENAI_KEY
 
+if BASE_URL:
+    openai.api_base = BASE_URL
+'''
 
 def get_chat_prompt(env: MujocoSimEnv):
     robot_names = env.get_sim_robots().keys()
@@ -65,7 +74,7 @@ class SingleThreadPrompter:
         debug_mode: bool = False,   
         temperature: float = 0,
         max_tokens: int = 1000, 
-        llm_source: str = "gpt-4",
+        llm_source: str = "meta-llama/Meta-Llama-3.1-405B-Instruct",
     ):
         self.env = env 
         self.robot_agent_names = env.get_sim_robots().keys()
@@ -222,7 +231,7 @@ Re-format to strictly follow [Action Output Instruction]!
         self.response_history = response_history
         return ready_to_execute, llm_plans, plan_feedbacks, response_history
 
-
+    '''
     def query_once(self, system_prompt, user_prompt=""):
         response = None
         usage = None   
@@ -255,7 +264,57 @@ Re-format to strictly follow [Action Output Instruction]!
                 print("API error, try again")
             continue
         return response, usage
+    '''
 
+    def query_once(self, system_prompt, user_prompt=''):
+        response = None
+        usage = None   
+        
+        if self.debug_mode: 
+            response = "EXECUTE\n"
+            for aname in self.robot_agent_names:
+                action = input(f"Enter action for {aname}:\n")
+                response += f"NAME {aname} ACTION {action}\n"
+            return response, dict()
+
+        for n in range(self.max_api_queries):
+            print('querying {}th time'.format(n))
+            try:
+                # Llama 模型请求
+                url = "https://api.siliconflow.cn/v1/chat/completions"
+                headers = {
+                            "accept": "application/json",
+                            "content-type": "application/json",
+                            "authorization": "Bearer sk-pbsptcfrjkgbzxwjwslwciftjnaobuttevomszzutppwmrcm"
+                        }
+                payload = {
+                    "model": self.llm_source,
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    "max_tokens": self.max_tokens,
+                    "temperature": self.temperature,
+                    "top_p": 0.7,  
+                    "top_k": 50,
+                    "frequency_penalty": 0.5,
+                    "n": 1
+                }
+                
+                # 发送请求并获取响应
+                response = requests.post(url, headers=headers, json=payload)
+                if response.status_code == 200:
+                    response_json = response.json()
+                    response_text = response_json['choices'][0]['message']["content"]
+                    print('======= response ======= \n ', response_text)
+                    usage = response_json.get('usage', {})
+                    break
+                else:
+                    print(f"API error, status code: {response.status_code}")
+            except Exception as e:
+                print(f"API error, try again: {str(e)}")
+            continue
+        return response_text, usage
     
 
     def post_execute_update(self, obs_desp: str, execute_success: bool, parsed_plan: str):
