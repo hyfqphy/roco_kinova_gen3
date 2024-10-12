@@ -72,22 +72,22 @@ class PackGroceryTask(MujocoSimEnv):
         one_obj_each: bool = False,
         **kwargs,
     ):    
-        self.robot_names = ["ur5e_robotiq", "gen3"] 
+        self.robot_names = ["ur5e_robotiq", "panda"] 
         self.robot_name_map = {
             "ur5e_robotiq": "Alice",
-        #    "panda": "Bob", 
-            "gen3":"Bob",
+            "panda": "Bob", 
+            # "gen3":"Bob",
         }
         self.robot_name_map_inv = {
             "Alice": "ur5e_robotiq",
-        #    "Bob": "panda", 
-            "Bob": "gen3",
+            "Bob": "panda", 
+            # "Bob": "gen3",
         }
         self.robots = dict()  
 
         robotiq_config = UR5E_ROBOTIQ_CONSTANTS.copy()  
-        # panda_config = PANDA_CONSTANTS.copy() 
-        gen3_config = GEN3_CONSTANTS.copy() 
+        panda_config = PANDA_CONSTANTS.copy() 
+        # gen3_config = GEN3_CONSTANTS.copy() 
 
         self.item_names = PACK_ITEM_NAMES
 
@@ -96,8 +96,8 @@ class PackGroceryTask(MujocoSimEnv):
             task_objects=PACK_TASK_OBJECTS,
             agent_configs=dict(
                 ur5e_robotiq=robotiq_config,
-            #    panda=panda_config, 
-                gen3=gen3_config,
+                panda=panda_config, 
+                # gen3=gen3_config,
             ),
             **kwargs
         ) 
@@ -113,7 +113,7 @@ class PackGroceryTask(MujocoSimEnv):
             use_ee_rest_quat=False,
             **robotiq_config,
         )
-        '''
+        
         self.robots[
             self.robot_name_map["panda"]
         ] = SimRobot(
@@ -121,14 +121,14 @@ class PackGroceryTask(MujocoSimEnv):
             use_ee_rest_quat=False,
             **panda_config,
         )
-        '''
-        self.robots[
-            self.robot_name_map["gen3"]
-            ] = SimRobot(
-            physics=self.physics,
-            use_ee_rest_quat=False,
-            **gen3_config,  # 初始化 Gen3 机器人
-        )
+        
+        # self.robots[
+        #     self.robot_name_map["gen3"]
+        #     ] = SimRobot(
+        #     physics=self.physics,
+        #     use_ee_rest_quat=False,
+        #     **gen3_config,  # 初始化 Gen3 机器人
+        # )
         self.align_threshold = 0.06
     
     def get_target_pos(self, agent_name, target_name) -> Optional[np.ndarray]: 
@@ -203,8 +203,8 @@ class PackGroceryTask(MujocoSimEnv):
                 all_body_ids.append(body_id)
 
         ee_link_ids = self.robots["Alice"].ee_link_body_ids + self.robots["Bob"].ee_link_body_ids
-        # ee_link_ids = [_id for _id in ee_link_ids if _id != "panda_hand"]
-        ee_link_ids = [_id for _id in ee_link_ids if _id != "bracelet_with_vision_link"]
+        ee_link_ids = [_id for _id in ee_link_ids if _id != "panda_hand"]
+        # ee_link_ids = [_id for _id in ee_link_ids if _id != "bracelet_with_vision_link"]
         return ret 
 
     def get_graspable_objects(self):
@@ -232,8 +232,8 @@ class PackGroceryTask(MujocoSimEnv):
     def get_robot_reach_range(self, robot_name: str) -> Dict[str, Tuple[float, float]]:
         if robot_name == "ur5e_robotiq" or robot_name == self.robot_name_map["ur5e_robotiq"]:
             return dict(x=(-1.3, 1.6), y=(-0.4, 1.5), z=(0, 1))
-        # elif robot_name == "panda" or robot_name == self.robot_name_map["panda"]:
-        elif robot_name == "gen3" or robot_name == self.robot_name_map["gen3"]:
+        elif robot_name == "panda" or robot_name == self.robot_name_map["panda"]:
+        # elif robot_name == "gen3" or robot_name == self.robot_name_map["gen3"]:
             return dict(x=(-1.3, 1.6), y=(0, 1.5), z=(0, 1))
         else:
             raise NotImplementedError
@@ -281,8 +281,8 @@ class PackGroceryTask(MujocoSimEnv):
         contacts = self.get_contact()
         allow_objs = self.item_names + ["bin", "table"]
         contacts["ur5e_robotiq"] = [c for c in contacts["ur5e_robotiq"] if c in allow_objs]
-        # contacts["panda"] = [c for c in contacts["panda"] if c in allow_objs]
-        contacts["gen3"] = [c for c in contacts["gen3"] if c in allow_objs]
+        contacts["panda"] = [c for c in contacts["panda"] if c in allow_objs]
+        # contacts["gen3"] = [c for c in contacts["gen3"] if c in allow_objs]
 
 
         obj_states = self.get_object_states(contact_dict=contacts)
@@ -323,15 +323,15 @@ class PackGroceryTask(MujocoSimEnv):
         robotiq_link_names = self.agent_configs["ur5e_robotiq"]['all_link_names'] + ['ur5e_robotiq']
         contacts["ur5e_robotiq"] = [c for c in contacts["ur5e_robotiq"] if c not in robotiq_link_names] 
 
-        '''
+        
         panda_link_names = self.agent_configs["panda"]['all_link_names'] + ["panda_right_finger", "panda_left_finger", "panda"]
         contacts["panda"] = [c for c in contacts['panda'] if c not in panda_link_names] 
         contacts["panda"].append("broom")
-        '''
+       
 
-        gen3_link_names = self.agent_configs["gen3"]['all_link_names'] + ["bracelet_with_vision_link", "gen3"]
-        contacts["gen3"] = [c for c in contacts['gen3'] if c not in gen3_link_names] 
-        contacts["gen3"].append("broom")
+        # gen3_link_names = self.agent_configs["gen3"]['all_link_names'] + ["bracelet_with_vision_link", "gen3"]
+        # contacts["gen3"] = [c for c in contacts['gen3'] if c not in gen3_link_names] 
+        # contacts["gen3"].append("broom")
         return contacts
 
     def central_plan_prompt(self, chat_history: List[str] = []):

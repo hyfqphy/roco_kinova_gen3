@@ -3,6 +3,7 @@ import json
 import pickle 
 import openai
 import requests
+import time
 import numpy as np
 from datetime import datetime
 from os.path import join
@@ -14,18 +15,18 @@ from rocobench.envs import MujocoSimEnv, EnvState
 from .feedback import FeedbackManager
 from .parser import LLMResponseParser
 
-'''
-assert os.path.exists("openai_key.json"), "Please put your OpenAI API key in a string in robot-collab/openai_key.json"
-with open("openai_key.json", "r") as f:
-    data = json.load(f)
-    OPENAI_KEY = data.get("openai_api_key")  # 提取 API 密钥
-    BASE_URL = data.get("base_url")  # 提取 base_url
 
-openai.api_key = OPENAI_KEY
+# assert os.path.exists("openai_key.json"), "Please put your OpenAI API key in a string in robot-collab/openai_key.json"
+# with open("openai_key.json", "r") as f:
+#     data = json.load(f)
+#     OPENAI_KEY = data.get("openai_api_key")  # 提取 API 密钥
+#     BASE_URL = data.get("base_url")  # 提取 base_url
 
-if BASE_URL:
-    openai.api_base = BASE_URL
-'''
+# openai.api_key = OPENAI_KEY
+
+# if BASE_URL:
+#     openai.api_base = BASE_URL
+
 PATH_PLAN_INSTRUCTION="""
 [Path Plan Instruction]
 Each <coord> is a tuple (x,y,z) for gripper location, follow these steps to plan:
@@ -255,43 +256,43 @@ Your response is:
         # response = "\n".join(response.split("EXECUTE")[1:])
         # print(response)  
         return agent_name, response, agent_responses
-    '''
-    def query_once(self, system_prompt, user_prompt, max_query):
-        response = None
-        usage = None   
-        # print('======= system prompt ======= \n ', system_prompt)
-        # print('======= user prompt ======= \n ', user_prompt)
+    
+    # def query_once(self, system_prompt, user_prompt, max_query):
+    #     response = None
+    #     usage = None   
+    #     # print('======= system prompt ======= \n ', system_prompt)
+    #     # print('======= user prompt ======= \n ', user_prompt)
 
-        if self.debug_mode: 
-            response = "EXECUTE\n"
-            for aname in self.robot_agent_names:
-                action = input(f"Enter action for {aname}:\n")
-                response += f"NAME {aname} ACTION {action}\n"
-            return response, dict()
+    #     if self.debug_mode: 
+    #         response = "EXECUTE\n"
+    #         for aname in self.robot_agent_names:
+    #             action = input(f"Enter action for {aname}:\n")
+    #             response += f"NAME {aname} ACTION {action}\n"
+    #         return response, dict()
 
-        for n in range(max_query):
-            print('querying {}th time'.format(n))
-            try:
-                response = openai.ChatCompletion.create(
-                    model=self.llm_source, 
-                    messages=[
-                        # {"role": "user", "content": ""},
-                        {"role": "system", "content": system_prompt+user_prompt},                                    
-                    ],
-                    max_tokens=self.max_tokens,
-                    temperature=self.temperature,
-                    )
-                usage = response['usage']
-                response = response['choices'][0]['message']["content"]
-                print('======= response ======= \n ', response)
-                print('======= usage ======= \n ', usage)
-                break
-            except:
-                print("API error, try again")
-            continue
-        # breakpoint()
-        return response, usage
-    '''
+    #     for n in range(max_query):
+    #         print('querying {}th time'.format(n))
+    #         try:
+    #             response = openai.ChatCompletion.create(
+    #                 model=self.llm_source, 
+    #                 messages=[
+    #                     # {"role": "user", "content": ""},
+    #                     {"role": "system", "content": system_prompt+user_prompt},                                    
+    #                 ],
+    #                 max_tokens=self.max_tokens,
+    #                 temperature=self.temperature,
+    #                 )
+    #             usage = response['usage']
+    #             response = response['choices'][0]['message']["content"]
+    #             print('======= response ======= \n ', response)
+    #             print('======= usage ======= \n ', usage)
+    #             break
+    #         except:
+    #             print("API error, try again")
+    #         continue
+    #     # breakpoint()
+    #     return response, usage
+    
 
     def query_once(self, system_prompt, user_prompt, max_query):
         response = None
@@ -340,9 +341,11 @@ Your response is:
                     print(f"API error, status code: {response.status_code}")
             except Exception as e:
                 print(f"API error, try again: {str(e)}")
+                
+            time.sleep(60)
             continue
         return response_text, usage
-
+        
     def post_execute_update(self, obs_desp: str, execute_success: bool, parsed_plan: str):
         if execute_success: 
             # clear failed plans, count the previous execute as full past round in history

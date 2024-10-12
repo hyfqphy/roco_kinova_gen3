@@ -419,7 +419,7 @@ def main(args):
         randomize_init=True,
         render_point_cloud=0,
         #render_cameras=["face_panda","face_ur5e","teaser",],
-        render_cameras=["face_gen3","face_ur5e","teaser",],
+        render_cameras=["face_panda","face_ur5e","teaser",],
         one_obj_each=True,
     )
     robots = env.get_sim_robots()
@@ -466,11 +466,11 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_dir", "-d", type=str, default="data")
+    parser.add_argument("--data_dir", "-d", type=str, default="data/llama3.1_405b")
     parser.add_argument("--temperature", "-temp", type=float, default=0)
     parser.add_argument("--start_id", "-sid", type=int, default=-1)
-    parser.add_argument("--num_runs", '-nruns', type=int, default=1)
-    parser.add_argument("--run_name", "-rn", type=str, default="test")
+    parser.add_argument("--num_runs", '-nruns', type=int, default=10)
+    parser.add_argument("--run_name", "-rn", type=str, default="pack")
     parser.add_argument("--tsteps", "-t", type=int, default=10)
     parser.add_argument("--task", type=str, default="sort_one")
     parser.add_argument("--output_mode", type=str, default="action_only", choices=["action_only", "action_and_path"])

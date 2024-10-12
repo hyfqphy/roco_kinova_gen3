@@ -2,6 +2,7 @@ import os
 import json
 import pickle 
 import requests
+import time
 import numpy as np
 from rocobench.envs import MujocoSimEnv, EnvState
 import openai
@@ -313,6 +314,7 @@ Re-format to strictly follow [Action Output Instruction]!
                     print(f"API error, status code: {response.status_code}")
             except Exception as e:
                 print(f"API error, try again: {str(e)}")
+            time.sleep(20)
             continue
         return response_text, usage
     

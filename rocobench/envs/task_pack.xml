@@ -2,7 +2,7 @@
   <compiler angle="radian" autolimits="true"/> 
   <include file="assets/ur5e/ur5e_assets.xml"/>
   <include file="assets/ur5e/ur5e_0_assets.xml"/>  
-  <include file="assets/kinova_gen3/gen3_assets.xml"/> 
+  <!-- <include file="assets/kinova_gen3/gen3_assets.xml"/>  -->
   <include file="assets/robotiq/robotiq_assets.xml"/>
   <include file="assets/panda/panda_assets.xml"/>   
   <include file="assets/scene_assets.xml"/>
@@ -38,13 +38,13 @@
       <include file="assets/ur5e/ur5e_robotiq.xml" />
     </body>
 
-    <!-- body name="panda" pos="-0.2 1.05 0.1" >
+    <body name="panda" pos="-0.2 1.05 0.1" >
       <include file="assets/panda/panda_include.xml" />
-    </body --> 
+    </body> 
 
-    <body name="gen3" pos="-0.2 1.05 0.1">
+    <!-- <body name="gen3" pos="-0.2 1.05 0.1">
       <include file="assets/kinova_gen3/gen3_include.xml" />
-    </body > 
+    </body >  -->
 
     <!-- useful for sampling random object initial locations -->
     <geom name="grid1" pos="-0.05 0.4 0.15" size="0.05 0.03 0.01" type="box" conaffinity="0" contype="0"  group="1" mass="0.00001" rgba="1 1 0 0" />
@@ -150,8 +150,8 @@
       <body name="soda_can_top" pos="0 0 0.06"/>
     </body>
 
-    <!-- <camera mode="fixed" name="face_panda" pos="0.223 -1.064 0.758" xyaxes="1.000 0.003 0.000 -0.000 0.143 0.990"/> -->
-    <camera mode="fixed" name="face_gen3" pos="0.223 -1.064 0.758" xyaxes="1.000 0.003 0.000 -0.000 0.143 0.990"/>
+    <camera mode="fixed" name="face_panda" pos="0.223 -1.064 0.758" xyaxes="1.000 0.003 0.000 -0.000 0.143 0.990"/>
+    <!-- <camera mode="fixed" name="face_gen3" pos="0.223 -1.064 0.758" xyaxes="1.000 0.003 0.000 -0.000 0.143 0.990"/> -->
     <camera mode="fixed" name="face_ur5e" pos="-0.207 2.256 1.027" xyaxes="-1.000 0.005 0.000 -0.001 -0.296 0.955"/>
     <camera mode="fixed" name="top_cam" pos="-0.001 0.652 2.057" xyaxes="-1.000 -0.000 -0.000 0.000 -1.000 0.019"/>
     <camera mode="fixed" name="right_cam" pos="1.873 0.605 0.926" xyaxes="0.014 1.000 0.000 -0.242 0.003 0.970"/>
@@ -163,29 +163,29 @@
 
  
   <equality>
-    <!--weld name='apple_top_panda' body1='apple_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/-->
-    <weld name='apple_top_gen3' body1='apple_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <weld name='apple_top_panda' body1='apple_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='apple_top_gen3' body1='apple_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
     <weld name='apple_top_robotiq' body1='apple_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
     
-    <!-- <weld name='banana_top_panda' body1='banana_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
-    <weld name='banana_top_gen3' body1='banana_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <weld name='banana_top_panda' body1='banana_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='banana_top_gen3' body1='banana_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
     <weld name='banana_top_robotiq' body1='banana_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
     
-    <!-- <weld name='milk_top_panda' body1='milk_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
-    <weld name='milk_top_gen3' body1='milk_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <weld name='milk_top_panda' body1='milk_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='milk_top_gen3' body1='milk_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
     <weld name='milk_top_robotiq' body1='milk_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
 
-    <!-- <weld name='bread_top_panda' body1='bread_top' body2='panda_palm' relpose='0 0 0.02 1 0 0 0' active='false'/> -->
-    <weld name='bread_top_gen3' body1='bread_top' body2='gen3_palm' relpose='0 0 0.02 1 0 0 0' active='false'/>
+    <weld name='bread_top_panda' body1='bread_top' body2='panda_palm' relpose='0 0 0.02 1 0 0 0' active='false'/>
+    <!-- <weld name='bread_top_gen3' body1='bread_top' body2='gen3_palm' relpose='0 0 0.02 1 0 0 0' active='false'/> -->
     <weld name='bread_top_robotiq' body1='bread_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
     
     <!-- distable some unrealistic grasps -->
-    <!-- <weld name='cereal_top_panda' body1='cereal_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
-    <weld name='cereal_top_gen3' body1='cereal_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <weld name='cereal_top_panda' body1='cereal_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='cereal_top_gen3' body1='cereal_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
     <weld name='cereal_top_robotiq' body1='cereal_top' body2='robotiq_tip' relpose='0 0 -0.01 1 0 0 0' active='false'/>
     
-    <!-- <weld name='soda_can_top_panda' body1='soda_can_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
-    <weld name='soda_can_top_gen3' body1='soda_can_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <weld name='soda_can_top_panda' body1='soda_can_top' body2='panda_palm' relpose='0 0 0 1 0 0 0' active='false'/>
+    <!-- <weld name='soda_can_top_gen3' body1='soda_can_top' body2='gen3_palm' relpose='0 0 0 1 0 0 0' active='false'/> -->
     <weld name='soda_can_top_robotiq' body1='soda_can_top' body2='robotiq_tip' relpose='0 0 0 1 0 0 0' active='false'/>
      
   </equality> 
@@ -220,25 +220,25 @@
     <pair name="bread_bin_left" geom1="bread_contact" geom2="bin_left" margin="0.02"/>
     <pair name="cereal_bin_left" geom1="cereal_contact" geom2="bin_left" margin="0.02"/>
 
-    <!-- <pair name="milk_panda" geom1="panda_hand_collision" geom2="milk_contact" margin="0.05" /> -->
-    <pair name="milk_gen3" geom1="gen3_joint_collision" geom2="milk_contact" margin="0.05" />
+    <pair name="milk_panda" geom1="panda_hand_collision" geom2="milk_contact" margin="0.05" />
+    <!-- <pair name="milk_gen3" geom1="gen3_joint_collision" geom2="milk_contact" margin="0.05" /> -->
     <pair name="milk_robotiq" geom1="robotiq_collision" geom2="milk_contact" margin="0.05" />
-    <!-- <pair name="cereal_panda" geom1="panda_hand_collision" geom2="cereal_contact" margin="0.05" /> -->
-    <pair name="cereal_gen3" geom1="gen3_joint_collision" geom2="cereal_contact" margin="0.05" />
+    <pair name="cereal_panda" geom1="panda_hand_collision" geom2="cereal_contact" margin="0.05" />
+    <!-- <pair name="cereal_gen3" geom1="gen3_joint_collision" geom2="cereal_contact" margin="0.05" /> -->
     <pair name="cereal_robotiq" geom1="robotiq_collision" geom2="cereal_contact" margin="0.05" />
     
   </contact>
 
 
   <keyframe> 
-    <!-- <key name="home" 
+    <key name="home" 
     ctrl="0 -1.5708 -1.5708 1.5708 -1.5708 -1.5708 0      0 0 0 0 0 -1.57079 0 1.57079 -0.7853 255"
     qpos='1.12783e-13 -1.5708 -1.56483 1.5767 -1.57002 -1.5708 -2.29951e-09 0.00292335 0.0027008 0.00717658 -0.0128126 0.00292335 0.00270015 0.00717411 -0.0128074 5.86814e-20 1.8588e-22 0.00658171 -1.77871e-06 -1.5771 -0.000334485 1.56965 -0.7853 0.04 0.04 -1.00107 0.627579 0.199784 0.997282 -1.06997e-07 -6.79817e-06 0.0736819 -0.670256 0.629387 0.169784 0.943607 5.04823e-09 9.65585e-10 0.331068 -0.61116 0.781788 0.254784 0.999977 1.35787e-16 9.9725e-16 -0.00685527 -0.4 0.6 0.194784 1 9.32793e-17 -1.06903e-16 2.44683e-16 -0.166066 0.669853 0.256784 0.99999 -3.48249e-13 4.39421e-14 -0.00440076 0.392892 0.451066 0.236784 -0.285049 3.82738e-11 -2.02185e-10 -0.958513'
-    />  -->
-    <key name="home" 
+    /> 
+    <!-- <key name="home" 
     ctrl="0 -1.5708 -1.5708 1.5708 -1.5708 -1.5708 0      0 0 0 0 0.26179939 3.14159265 -2.26892803 0 0.95993109 1.57079633"
     qpos='1.12783e-13 -1.5708 -1.56483 1.5767 -1.57002 -1.5708 -2.29951e-09 0.00292335 0.0027008 0.00717658 -0.0128126 0.00292335 0.00270015 0.00717411 -0.0128074 5.86814e-20 1.8588e-22 0.00658171 -1.77871e-06 -1.5771 -0.000334485 1.56965 -0.7853 0.04 0.04 -1.00107 0.627579 0.199784 0.997282 -1.06997e-07 -6.79817e-06 0.0736819 -0.670256 0.629387 0.169784 0.943607 5.04823e-09 9.65585e-10 0.331068 -0.61116 0.781788 0.254784 0.999977 1.35787e-16 9.9725e-16 -0.00685527 -0.4 0.6 0.194784 1 9.32793e-17 -1.06903e-16 2.44683e-16 -0.166066 0.669853 0.256784 0.99999 -3.48249e-13 4.39421e-14 -0.00440076 0.392892 0.451066 0.236784 -0.285049 3.82738e-11 -2.02185e-10 -0.958513'
-    /> 
+    />  -->
   </keyframe>
  
 </mujoco>
